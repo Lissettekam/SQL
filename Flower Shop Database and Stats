@@ -1,0 +1,32 @@
+-- Create a flower shop database
+
+CREATE TABLE inventory (id INTEGER PRIMARY KEY, name TEXT, quantity INTEGER, origin TEXT, color TEXT, price INTEGER);
+INSERT INTO inventory VALUES (1,"Free Spirit Rose", 50, "Colombia", "orange and peach", 3.50);
+INSERT INTO inventory VALUES (2, "Pink Floyd Rose", 100, "Ecuador", "pink", 3.75);
+INSERT INTO inventory VALUES (3, "Red Monster Rose", 75, "Ecuador", "red", 3.00);
+INSERT INTO inventory VALUES (4, "Red Heart Rose", 100, "Colombia", "red", 3.00);
+INSERT INTO inventory VALUES (5, "Red Long Stem Rose", 100, "Colombia", "red", 3.50);
+INSERT INTO inventory VALUES (6, "Red Wanted Rose", 125, "Colombia", "red", 3.25);
+INSERT INTO inventory VALUES (7, "Red Tess Rose", 150, "Ecuador", "red", 3.75);
+INSERT INTO inventory VALUES (8, "Pink Bridal Piano", 100, "Ecuador", "pink", 3.00);
+INSERT INTO inventory VALUES (9, "Blush Sabrina", 150, "Ecuador", "blush", 3.25);
+INSERT INTO inventory VALUES (10, "Blush Sahara", 200, "Colomba", "blush", 4.00);
+INSERT INTO inventory VALUES (11, "Brut Carnation", 300, "Ecuador", "blush", 0.75);
+INSERT INTO inventory VALUES (12, "Red Carnation", 300, "Ecuador", "red", 0.75);
+INSERT INTO inventory VALUES (13, "Pink Carnation", 300, "Ecuador", "pink", 0.75);
+INSERT INTO inventory VALUES (14, "Orange Carnation", 250, "Colombia", "orange", 0.75);
+INSERT INTO inventory VALUES (15, "White Delfinium", 80, "Ecuador", "white", 1.75);
+
+--Display the database ordered by price
+SELECT * FROM inventory WHERE origin = "Ecuador" ORDER BY price;
+
+--What is the avg price of flowers from Colombia?
+SELECT AVG(price) "Avg Colombia Price"
+FROM inventory 
+WHERE origin = "Colombia";
+
+--What are the top 3 most ordered (highest quantity) flowers?
+SELECT Name, Quantity, Price 
+FROM inventory
+ORDER BY quantity DESC
+LIMIT 3;
