@@ -1,0 +1,57 @@
+/* Create table about the people and what they do here */
+
+CREATE TABLE artist (id INTEGER PRIMARY KEY,
+    name TEXT,
+    genre TEXT);
+INSERT INTO artist (name, genre)
+    VALUES ("dalex", "reggaeton");
+INSERT INTO artist (name, genre)
+    VALUES ("sech", "reggaeton");
+INSERT INTO artist (name, genre)
+    VALUES ("shakira", "pop");
+INSERT INTO artist (name, genre)
+    VALUES ("karol g", "reggaeton");
+
+
+CREATE TABLE songs (id INTEGER PRIMARY KEY,
+    singer_id INTEGER,
+    song_title TEXT);
+INSERT INTO songs (singer_id, song_title)
+    VALUES ("1", "hola");
+INSERT INTO songs (singer_id, song_title)
+    VALUES ("2", "otro trago");
+INSERT INTO songs (singer_id, song_title)
+    VALUES ("3", "monotonia");
+INSERT INTO songs (singer_id, song_title)
+    VALUES ("4", "TQG");
+
+
+
+CREATE TABLE colabs (id INTEGER PRIMARY KEY,
+    singer1_id INTEGER,
+    singer2_id INTEGER);
+INSERT INTO colabs (singer1_id, singer2_id)
+    VALUES ("1", "2");
+INSERT INTO colabs (singer1_id, singer2_id)
+    VALUES ("3", "4");
+
+SELECT * FROM artist;
+
+SELECT * FROM songs;
+
+SELECT * FROM colabs;
+
+/* JOIN name of artist with corresponding song title*/
+SELECT artist.name, songs.song_title
+FROM songs
+JOIN artist
+ON artist.id = songs.singer_id;
+
+
+/* SELF JOIN - names of artists who colab*/
+SELECT a.name, b.name
+FROM colabs
+JOIN artist a
+ON a.id = colabs.singer1_id
+JOIN artist b
+ON b.id = colabs.singer2_id;
