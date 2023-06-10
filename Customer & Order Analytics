@@ -60,3 +60,84 @@ SELECT Product, SUM (Quantity), location
 FROM BIT_DB.FebSales
 WHERE location LIKE '%Los Angeles%'
 GROUP BY Product;
+
+--Which locations in New York received at least 3 orders in January, and how many orders did they each receive? --
+
+SELECT DISTINCT location, COUNT(orderID)
+FROM BIT_DB.JanSales
+WHERE location LIKE '%NY%'
+GROUP BY location
+HAVING COUNT(orderID) >= 3
+ORDER BY COUNT(orderID);
+
+--How many of each type of headphone were sold in February?--
+
+
+SELECT Product, SUM(Quantity) AS Quantity
+FROM BIT_DB.FebSales
+WHERE Product LIKE '%headphone%'
+GROUP BY Product;
+
+--What was the average amount spent per account in February?--
+
+SELECT 
+SUM(Quantity*price) / COUNT(cs.acctnum) 
+FROM BIT_DB.FebSales AS fs
+LEFT JOIN bit_db.customers AS cs
+ON cs.order_id = fs.orderID
+WHERE length(orderid) = 6 
+AND orderid <> 'Order ID';
+
+--# OR # --
+
+SELECT avg(quantity*price)
+FROM BIT_DB.FebSales Feb
+
+LEFT JOIN BIT_DB.customers cust
+ON FEB.orderid=cust.order_id
+
+WHERE length(orderid) = 6 
+AND orderid <> 'Order ID';
+
+--What was the average quantity of products purchased per account in February? --
+
+
+SELECT AVG(Quantity)
+FROM BIT_DB.FebSales fs
+LEFT JOIN BIT_DB.customers cs
+ON fs.orderID = cs.order_id
+WHERE length(orderID) = 6
+AND orderID <> 'Order ID';
+
+--or--
+
+SELECT SUM(fs.Quantity)*1.0 / COUNT(DISTINCT cs.acctnum)*1.0
+FROM BIT_DB.FebSales fs
+LEFT JOIN BIT_DB.customers cs
+ON fs.orderID = cs.order_id
+WHERE length(orderID) = 6
+AND orderID <> 'Order ID';
+
+--OTHER STATS--
+
+SELECT
+AVG(fs.Quantity) AS avg_quantity
+, SUM(fs.Quantity)/COUNT(cx.acctnum) AS sum_avg_quantity
+, COUNT(DISTINCT cx.acctnum)
+, COUNT(fs.Quantity)
+, COUNT(cx.acctnum)
+, SUM(fs.Quantity)
+, SUM(fs.Quantity) * 1.0/COUNT(cx.acctnum)*1.0
+FROM BIT_DB.FebSales fs
+LEFT JOIN BIT_DB.customers cx
+ON fs.orderID = cx.order_id
+WHERE length(orderID) = 6
+AND orderID <> 'Order ID';
+
+--Which product brought in the most revenue in January and how much revenue did it bring in total?--
+
+SELECT Product
+, SUM(Quantity * price) AS Revenue
+FROM BIT_DB.JanSales
+GROUP BY Product
+ORDER BY(Revenue)DESC LIMIT 1;
